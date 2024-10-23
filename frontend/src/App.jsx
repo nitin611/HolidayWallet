@@ -8,6 +8,8 @@ import {Signup} from './Pages/Signup.jsx';  // Add missing imports
 import {Signin} from './Pages/Signin.jsx';
 import Contact from './Pages/Contact.jsx';
 import About from './Pages/About.jsx';
+// protected routes from here-
+import { Dashboard } from './Pages/Dashboard.jsx';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
          </Route> 
        
          
