@@ -22,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
+          {/* private routes will be here */}
           <Route path="/Dashboard" element={<Dashboard />} />
          </Route> 
        
