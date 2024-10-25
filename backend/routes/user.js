@@ -27,13 +27,14 @@ const updateSchema=zod.object({
 // signup route-
 router.post("/signup",async(req,res)=>{
     const body=req.body;
-    const {success}=signupSchema.safeParse(req.body);
-
-    if(!success){
-        return res.json({
-            msg:"Incorrect Inputs"
-        })
+    const { success, error } = signupSchema.safeParse(req.body);
+    if (!success) {
+        return res.status(400).json({
+            msg: "Incorrect Inputs",
+            error: error.errors  // This will give details on which fields are invalid
+        });
     }
+    
     const existingUser=await User.findOne({
         username:body.username
     })
@@ -91,7 +92,7 @@ router.post("/signin",async(req,res)=>{
     }
 
     // if not found user-
-    res.status(411).json({
+    res.status(400).json({
         msg:"Error while signin"
     });
 })

@@ -8,13 +8,18 @@ import {Signup} from './Pages/Signup.jsx';  // Add missing imports
 import {Signin} from './Pages/Signin.jsx';
 import Contact from './Pages/Contact.jsx';
 import About from './Pages/About.jsx';
+import { AuthProvider } from './AuthContext.jsx';
 // protected routes from here-
+import ProtectedRoute from './Component/ProtectedRoute.jsx';
 import { Dashboard } from './Pages/Dashboard.jsx';
+import { SendMoney } from './Pages/SendMoney.jsx';
+
 
 function App() {
   return (
     <>
-      <BrowserRouter>
+     <AuthProvider>
+     <BrowserRouter>
         <Routes> {/* Fixed Routes import */}
         <Route path="/" element={<Layout />}>
         <Route path="/signup" element={<Signup />} />
@@ -22,13 +27,34 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
-          {/* private routes will be here */}
-          <Route path="/Dashboard" element={<Dashboard />} />
+           {/* Protecting the Dashboard Route */}
+           <Route 
+                        path="/dashboard" 
+                        element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        } 
+                    />
+
+           <Route 
+                        path="/sendMoney/:id" 
+                        element={
+                            <ProtectedRoute>
+                                <SendMoney />
+                            </ProtectedRoute>
+                        } 
+                    />
+                    
          </Route> 
+        
+        
        
          
         </Routes>
       </BrowserRouter>
+     </AuthProvider>
+     
     </>
   );
 }
