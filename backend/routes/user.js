@@ -65,37 +65,48 @@ router.post("/signup",async(req,res)=>{
 })
 
 // signin route-
-router.post("/signin",async(req,res)=>{
-    const body=req.body;
-    const {success}=signinSchema.safeParse(req.body)
-    if(!success){
+
+router.post("/signin", async (req, res) => {
+    const body = req.body;
+    const { success } = signinSchema.safeParse(req.body);
+    if (!success) {
         return res.status(411).json({
-            msg:"incorrect inputs"
-        })
+            msg: "Incorrect inputs",
+        });
     }
 
-    // find the user in db-
-    const user=await User.findOne({
-        username:body.username,
-        password:body.password
+    // Find the user in the database
+    const user = await User.findOne({
+        username: body.username,
+        password: body.password
     });
-    // if we found user then-
-    if(user){
-        const token=jwt.sign({
-            userId:user._id
-        },JWT_SECRET)
-
+    
+    // If user is found
+    if (user) {
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET);
+        
+        // Find user's account to get the balance
+        const account = await Account.findOne({ userId: user._id });
+        
         res.json({
-            token:token
-        })
-        return
+            token: token,
+            user: {
+                _id: user._id,
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                balance: account?.balance || 0  // Default balance to 0 if not found
+            }
+        });
+        return;
     }
 
-    // if not found user-
+    // If user is not found
     res.status(400).json({
-        msg:"Error while signin"
+        msg: "Error while signing in"
     });
-})
+});
+
 
 // update firstname,lastname,password of the user-
 
@@ -144,6 +155,29 @@ router.get("/bulk", async (req, res) => {
         }))
     })
 })
+
+// getUserById and update the balance-
+// Add this to your user-related routes
+router.get("/:id",authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Return only relevant user information (omit sensitive fields like password)
+        const userAccount = await Account.findOne({ userId: user._id });
+        res.json({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            balance: userAccount?.balance || 0
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user details" });
+    }
+});
+
 
 
 

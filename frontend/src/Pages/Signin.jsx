@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 
 export const Signin = () => {
@@ -15,17 +14,18 @@ export const Signin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = { username, password };
-
+    
         try {
             const response = await axios.post("http://localhost:3000/api/v1/user/signin", data);
-            const token = response.data.token;
-            // Set authentication state
-            login(token);
-            if (token) {
-               
+            const userData = response.data; // Assuming response contains token and user details
+    
+            console.log("User Data:", userData); // Debugging log
+    
+            // Pass full userData to AuthContext login
+            login(userData);
+    
+            if (userData.token) {
                 toast.success("Signin successful!");
-                // Navigate to dashboard or protected page if applicable
-                
                 navigate('/dashboard');
             }
         } catch (error) {
@@ -42,6 +42,7 @@ export const Signin = () => {
             }
         }
     };
+    
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-purple-50 py-12 px-4 sm:px-6 lg:px-8">
