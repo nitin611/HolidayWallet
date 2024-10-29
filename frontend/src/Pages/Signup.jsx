@@ -6,13 +6,15 @@ import 'react-toastify/dist/ReactToastify.css';
 export const Signup = () => {
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
-    const [username, setUsername] = useState(""); // update to match backend schema
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false); // Loading state
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Show spinner
         const data = {
-            username, // email field updated to username
+            username,
             password,
             firstName: firstname,
             lastName: lastname
@@ -21,7 +23,8 @@ export const Signup = () => {
             const response = await axios.post("https://holidaywallet.onrender.com/api/v1/user/signup", data);
             toast.success("Signup successful! Welcome to HolidayWallet!");
             console.log("Response from server:", response.data);
-        }  catch (error) {
+            // Navigate('/signin')
+        } catch (error) {
             if (error.response) {
                 if (error.response.status === 411) {
                     toast.error("User already exists. Please sign in.");
@@ -33,9 +36,10 @@ export const Signup = () => {
             } else {
                 toast.error("Server is unreachable. Check your connection.");
             }
+        } finally {
+            setLoading(false); // Hide spinner
         }
     };
-    
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-purple-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -73,22 +77,20 @@ export const Signup = () => {
                         />
                     </div>
 
-                   {/* Username Field */}
-<div>
-    <label htmlFor="username" className="block text-lg font-medium text-gray-700">
-        Email Address
-    </label>
-    <input
-        type="email"
-        id="username"
-        name="username"
-        onChange={(e) => setUsername(e.target.value)}
-        required
-        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500 mt-2"
-        placeholder="you@example.com"
-    />
-</div>
-
+                    <div>
+                        <label htmlFor="username" className="block text-lg font-medium text-gray-700">
+                            Email Address
+                        </label>
+                        <input
+                            type="email"
+                            id="username"
+                            name="username"
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500 mt-2"
+                            placeholder="you@example.com"
+                        />
+                    </div>
 
                     <div>
                         <label htmlFor="password" className="block text-lg font-medium text-gray-700">
@@ -107,9 +109,17 @@ export const Signup = () => {
 
                     <button
                         type="submit"
-                        className="w-full py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-500 transition"
+                        disabled={loading} // Disable button while loading
+                        className="w-full py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-500 transition flex justify-center items-center"
                     >
-                        Sign Up
+                        {loading ? (
+                            <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                        ) : (
+                            "Sign Up"
+                        )}
                     </button>
                 </form>
                 <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
