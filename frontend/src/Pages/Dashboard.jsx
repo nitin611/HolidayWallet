@@ -12,7 +12,7 @@ export const Dashboard = () => {
     const handleSearch = async (e) => {
         setSearchQuery(e.target.value);
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${searchQuery}`);
+            const response = await axios.get(`https://holidaywallet.onrender.com/api/v1/user/bulk?filter=${searchQuery}`);
             setUsers(response.data.user);
         } catch (error) {
             console.error("Error fetching users", error);

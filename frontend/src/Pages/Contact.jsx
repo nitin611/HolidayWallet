@@ -57,10 +57,10 @@ export default function Contact() {
                             We’d love to hear from you! Reach out to us at:
                         </p>
                         <p className="text-lg font-bold text-gray-800 mb-2">
-                            Email: <span className="text-purple-600">support@holidaywallet.com</span>
+                            Email: <span className="text-purple-600">jhanitin906@gmail.com</span>
                         </p>
                         <p className="text-lg font-bold text-gray-800">
-                            Phone: <span className="text-purple-600">+1 123-456-7890</span>
+                            Phone: <span className="text-purple-600">+91 8287215176</span>
                         </p>
                     </div>
 
@@ -68,14 +68,11 @@ export default function Contact() {
                     <div className="text-center sm:text-left">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4">Follow Us</h3>
                         <div className="flex justify-center sm:justify-start space-x-6">
-                            <a href="#" className="text-purple-600 hover:text-purple-800">
-                                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" className="w-8 h-8" />
-                            </a>
-                            <a href="#" className="text-purple-600 hover:text-purple-800">
-                                <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Twitter" className="w-8 h-8" />
-                            </a>
-                            <a href="#" className="text-purple-600 hover:text-purple-800">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" className="w-8 h-8" />
+                         
+                         
+                            <a href="https://x.com/Nitin13789275" className="text-purple-600 hover:text-purple-800">
+                            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" className="w-8 h-8" />
+
                             </a>
                         </div>
                     </div>
@@ -84,8 +81,8 @@ export default function Contact() {
                     <div className="text-center sm:text-left">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4">Office Location</h3>
                         <p className="text-lg text-gray-600">
-                            123 Holiday Wallet Street, Suite 100, <br /> 
-                            New York, NY 10001
+                            Vandlur Holiday Wallet Vit, <br /> 
+                             Chennai 600127
                         </p>
                     </div>
                 </div>

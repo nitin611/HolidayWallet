@@ -18,7 +18,7 @@ export const Signup = () => {
             lastName: lastname
         };
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/user/signup", data);
+            const response = await axios.post("https://holidaywallet.onrender.com/api/v1/user/signup", data);
             toast.success("Signup successful! Welcome to HolidayWallet!");
             console.log("Response from server:", response.data);
         }  catch (error) {

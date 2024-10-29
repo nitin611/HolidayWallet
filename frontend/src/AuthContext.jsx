@@ -34,6 +34,8 @@ export const AuthProvider = ({ children }) => {
             ...prevUser,
             ...updatedUserData,
         }));
+        // Update local storage
+      
     };
 
     return (
